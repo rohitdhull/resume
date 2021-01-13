@@ -1,0 +1,1948 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| company            |
+| employee           |
+| employeeinfo       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| persons            |
+| sakila             |
+| sys                |
+| world              |
+| zy                 |
++--------------------+
+11 rows in set (0.01 sec)
+
+mysql> use employeeinfo;
+Database changed
+mysql> showtables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'showtables' at line 1
+mysql> show tables;
++------------------------+
+| Tables_in_employeeinfo |
++------------------------+
+| employeeinformation    |
++------------------------+
+1 row in set (0.01 sec)
+
+mysql> desc employeeinformation;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| Employeename | varchar(300) | NO   |     | NULL    |       |
+| lastname     | char(200)    | YES  |     | NULL    |       |
+| age          | int          | YES  |     | NULL    |       |
+| Adress       | varchar(500) | NO   |     | NULL    |       |
+| city         | varchar(200) | NO   |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> use employee;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_employee |
++--------------------+
+| employeedata       |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> use company;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_company       |
++-------------------------+
+| address                 |
+| companyinfo             |
+| departmentalinformation |
+| educationalbackground   |
+| employeeinfo            |
+| professionalbackground  |
+| salary                  |
++-------------------------+
+7 rows in set (0.00 sec)
+
+mysql> desc address;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| employeeid  | char(10)     | YES  | MUL | NULL    |       |
+| houseno     | varchar(200) | NO   | PRI | NULL    |       |
+| city        | varchar(200) | NO   |     | NULL    |       |
+| state       | varchar(200) | NO   |     | NULL    |       |
+| pincode     | varchar(10)  | NO   |     | NULL    |       |
+| addresstype | varchar(200) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> show values;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values' at line 1
+mysql> SELECT * FROM[address];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address]' at line 1
+mysql> SELECT * FROM[address] WHERE[houseno]="value";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address] WHERE[houseno]="value"' at line 1
+mysql> desc companyinfo;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| companyname   | varchar(200) | NO   |     | NULL    |       |
+| headquarters  | varchar(200) | NO   |     | NULL    |       |
+| phnno         | int          | NO   | PRI | NULL    |       |
+| established   | varchar(200) | NO   |     | NULL    |       |
+| noofemployees | int          | NO   |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM companyinfo;
++-------------+--------------+---------+-------------+---------------+
+| companyname | headquarters | phnno   | established | noofemployees |
++-------------+--------------+---------+-------------+---------------+
+| facebook    | new york     | 2345228 | 2008        |          2300 |
+| google      | california   | 2345638 | 2008        |          1300 |
+| amazon      | sanfrancisco | 2345678 | 1999        |         10000 |
+| apple       | new jersey   | 2349928 | 2018        |          2200 |
++-------------+--------------+---------+-------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO companyinfo(companyname, headquarters, phnno, established, noofemployees)
+    -> VALUE ('paytm','delhi','84638922','2010','10000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc departmentalinformation;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| deptid       | char(10)     | NO   | PRI | NULL    |       |
+| deptcode     | char(5)      | NO   |     | NULL    |       |
+| name         | varchar(100) | NO   |     | NULL    |       |
+| parentdeptid | char(5)      | NO   |     | NULL    |       |
+| employeeid   | char(10)     | YES  | MUL | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM departmentalinformation;
+Empty set (0.00 sec)
+
+mysql> desc educationalbackground;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| university  | varchar(200)  | NO   |     | NULL    |       |
+| course      | varchar(200)  | NO   |     | NULL    |       |
+| startdate   | date          | NO   |     | NULL    |       |
+| enddate     | date          | NO   |     | NULL    |       |
+| description | varchar(2000) | NO   |     | NULL    |       |
+| eduid       | int           | NO   | PRI | NULL    |       |
+| employeeid  | char(10)      | YES  | MUL | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> desc employeeinfo;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| employeeid       | char(10)     | NO   | PRI | NULL    |       |
+| name             | varchar(200) | NO   |     | NULL    |       |
+| lastname         | varchar(100) | NO   |     | NULL    |       |
+| phnno            | int          | NO   | UNI | NULL    |       |
+| temporaryaddress | varchar(200) | NO   |     | NULL    |       |
+| emailid          | varchar(200) | NO   | UNI | NULL    |       |
+| DOB              | date         | NO   |     | NULL    |       |
+| joiningdate      | date         | NO   |     | NULL    |       |
+| leavingdate      | date         | NO   |     | NULL    |       |
+| aadharno         | int          | NO   | UNI | NULL    |       |
+| panno            | int          | NO   | UNI | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+
+mysql> desc proffessionalbackground;
+ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+mysql> desc professionalbackground;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| companyid     | int          | NO   | PRI | NULL    |       |
+| roleincompany | varchar(200) | NO   |     | NULL    |       |
+| location      | varchar(200) | NO   |     | NULL    |       |
+| startdate     | date         | NO   |     | NULL    |       |
+| enddate       | date         | NO   |     | NULL    |       |
+| description   | varchar(200) | NO   |     | NULL    |       |
+| employeeid    | char(10)     | YES  | MUL | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> desc salary;
++------------+----------+------+-----+---------+-------+
+| Field      | Type     | Null | Key | Default | Extra |
++------------+----------+------+-----+---------+-------+
+| salid      | char(5)  | NO   | PRI | NULL    |       |
+| salary     | int      | NO   |     | NULL    |       |
+| startdate  | date     | NO   |     | NULL    |       |
+| enddate    | date     | NO   |     | NULL    |       |
+| employeeid | char(10) | YES  | MUL | NULL    |       |
++------------+----------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','08061999','1 jan','null','122345','32145');
+ERROR 1292 (22007): Incorrect date value: '08061999' for column 'DOB' at row 1
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','8 july 1999','1 jan','null','122345','32145');
+ERROR 1292 (22007): Incorrect date value: '8 july 1999' for column 'DOB' at row 1
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','1 jan','null','122345','32145');
+ERROR 1292 (22007): Incorrect date value: '1 jan' for column 'joiningdate' at row 1
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','2010-02-02','null','122345','32145');
+ERROR 1292 (22007): Incorrect date value: 'null' for column 'leavingdate' at row 1
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','2010-02-02','NULL','122345','32145');
+ERROR 1292 (22007): Incorrect date value: 'NULL' for column 'leavingdate' at row 1
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','2010-02-02','','122345','32145');
+ERROR 1292 (22007): Incorrect date value: '' for column 'leavingdate' at row 1
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','2010-02-02',NULL,'122345','32145');
+ERROR 1048 (23000): Column 'leavingdate' cannot be null
+mysql> ALTER TABLE employeeinfo
+    -> DROP COLUMN leavingdate;
+Query OK, 0 rows affected (0.39 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE employeeinfo
+    -> ADD leavingdate date();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '()' at line 2
+mysql> ALTER TABLE employeeinfo
+    -> ADD leavingdate date;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employeeinfo;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| employeeid       | char(10)     | NO   | PRI | NULL    |       |
+| name             | varchar(200) | NO   |     | NULL    |       |
+| lastname         | varchar(100) | NO   |     | NULL    |       |
+| phnno            | int          | NO   | UNI | NULL    |       |
+| temporaryaddress | varchar(200) | NO   |     | NULL    |       |
+| emailid          | varchar(200) | NO   | UNI | NULL    |       |
+| DOB              | date         | NO   |     | NULL    |       |
+| joiningdate      | date         | NO   |     | NULL    |       |
+| aadharno         | int          | NO   | UNI | NULL    |       |
+| panno            | int          | NO   | UNI | NULL    |       |
+| leavingdate      | date         | YES  |     | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+11 rows in set (0.01 sec)
+
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, aadharno, panno,leavingdate)
+    -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','2010-02-02','122345','32145',NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, aadharno, panno,leavingdate)
+    -> VALUE ('2','himanshu','sharma','905087229','panipat','himanshuxyz@gmail.com','1997-02-08','2020-04-03','122335','32245',NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, aadharno, panno,leavingdate)
+    -> VALUE ('3','gaurav','goyal','905087119','smalkha','gaurav@gmail.com','1998-02-02','2012-01-01','127745','12145',NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, aadharno, panno,leavingdate)
+    -> VALUE ('4','divyansh','kumar','902087119','faridabad','divyansh@gmail.com','1992-11-11','2014-04-08','127795','12135',NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, aadharno, panno,leavingdate)
+    -> VALUE ('5','gourav','kumar','402087119','banglore','gourav@gmail.com','1992-12-12','2014-06-06','127705','42135',NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO proffessionalbackground(companyid, roleincompany, location, startdate, enddate, description, employeeid)
+    -> VALUE ('1211','software developer','austria','2009-08-09','2010-02-02','iam currentlyworkig at walmart,'1');
+    '> '''
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1');
+'''' at line 2
+mysql> INSERT INTO proffessionalbackground(companyid, roleincompany, location, startdate, enddate, description, employeeid)
+    -> VALUE ('1211','software developer','austria','2009-08-09','2010-02-02','iam currentlyworkig at walmart','1');
+ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+mysql> INSERT INTO professionalbackground(companyid, roleincompany, location, startdate, enddate, description, employeeid)
+    -> VALUE ('1211','software developer','austria','2009-08-09','2010-02-02','iam currentlyworkig at walmart','1');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO professionalbackground(companyid, roleincompany, location, startdate, enddate, description, employeeid)
+    -> VALUE ('1212','junior software developer','delhi','2003-08-05','2011-02-03','iam currentlyworkig at apple','2');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO professionalbackground(companyid, roleincompany, location, startdate, enddate, description, employeeid)
+    -> VALUE ('1213','logistics manager','hyderabad','2002-03-03','2009-01-02','iam currentlyworkig at paypal','3');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO professionalbackground(companyid, roleincompany, location, startdate, enddate, description, employeeid)
+    -> VALUE ('1214','CTO','new york','2003-01-01','2010-01-08','iam currentlyworkig at facebook','4');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO professionalbackground(companyid, roleincompany, location, startdate, enddate, description, employeeid)
+    -> VALUE ('1215','manager','tokyo','2001-11-11','2008-01-02','iam currentlyworkig at google','5');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO professionalbackground(companyid, roleincompany, location, startdate, enddate, description, employeeid)
+    -> VALUE ('1216','producer','mumbai','2005-11-11','2008-07-04','iam currentlyworkig at youngmoney','6');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company`.`professionalbackground`, CONSTRAINT `professionalbackground_ibfk_1` FOREIGN KEY (`employeeid`) REFERENCES `employeeinfo` (`employeeid`))
+mysql> INSERT INTO salary(salid,  salary, startdate, enddate, employeeid)
+    -> VALUE ('1','30000','2010-09-09','2020-08-04','1');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO salary(salid,  salary, startdate, enddate, employeeid)
+    -> VALUE ('1','30000','2004-09-01','2009-02-02','2');
+ERROR 1062 (23000): Duplicate entry '1' for key 'salary.PRIMARY'
+mysql> INSERT INTO salary(salid,  salary, startdate, enddate, employeeid)
+    -> VALUE ('21','40000','2004-09-01','2009-02-02','2');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO salary(salid,  salary, startdate, enddate, employeeid)
+    -> VALUE ('212','60000','2000-07-08','2006-09-07','3');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO salary(salid,  salary, startdate, enddate, employeeid)
+    -> VALUE ('213','70000','2002-03-03','2008-09-09','4');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO salary(salid,  salary, startdate, enddate, employeeid)
+    -> VALUE ('214','80000','2004-03-03','2007-09-10','5');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO salary(salid,  salary, startdate, enddate, employeeid)
+    -> VALUE ('215','90000','2005-03-05','2010-12-12','6');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`company`.`salary`, CONSTRAINT `salary_ibfk_1` FOREIGN KEY (`employeeid`) REFERENCES `employeeinfo` (`employeeid`))
+mysql> INSERT INTO educationalbackground( university, course, startdate, enddate, description, eduid, employeeid)
+    -> VALUE ('PIET','Btech','2019-02-04','2023-02-03','btech student','1233','1');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO educationalbackground( university, course, startdate, enddate, description, eduid, employeeid)
+    -> VALUE ('KURUKSHETRA UNIVERSITY','BCA','2019-02-02','2022-02-02','web developer','1213','2');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO educationalbackground( university, course, startdate, enddate, description, eduid, employeeid)
+    -> VALUE ('KURUKSHETRA UNIVERSITY','MBA','2019-02-01','2022-04-05','mern developer','1215','3');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO educationalbackground( university, course, startdate, enddate, description, eduid, employeeid)
+    -> VALUE ('MMU UNIVERSITY','bsc','2018-02-01','2021-04-09','data scientist','1216','4');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO educationalbackground( university, course, startdate, enddate, description, eduid, employeeid)
+    -> VALUE ('MMU UNIVERSITY','bsc','2018-02-01','2021-04-09','developer','1217','5');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO  departmentalinformation(deptid, deptcode, name, parentdeptid, employeeid)
+    -> VALUE ('111','123','rohit','2111','1');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO  departmentalinformation(deptid, deptcode, name, parentdeptid, employeeid)
+    -> VALUE ('121','122','himanshu','2112','2');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO  departmentalinformation(deptid, deptcode, name, parentdeptid, employeeid)
+    -> VALUE ('124','123','divyansh','2113','3');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO  departmentalinformation(deptid, deptcode, name, parentdeptid, employeeid)
+    -> VALUE ('125','124','gaurav','2114','4');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO  departmentalinformation(deptid, deptcode, name, parentdeptid, employeeid)
+    -> VALUE ('126','125','gourav','2115','5');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO address(employeeid, houseno, city, state, pincode, addresstype)
+    -> VALUE ('1','8686','hisar','haryana','126112','city');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO address(employeeid, houseno, city, state, pincode, addresstype)
+    -> VALUE ('2','8683','fantum','telangana','126113','city');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO address(employeeid, houseno, city, state, pincode, addresstype)
+    -> VALUE ('3','8687','jalandhar','punjab','126114','city');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO address(employeeid, houseno, city, state, pincode, addresstype)
+    -> VALUE ('4','8688','jaipur','rajasthan','126115','city');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO address(employeeid, houseno, city, state, pincode, addresstype)
+    -> VALUE ('5','8689','ahemdabad','gujarat','126116','city');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| company            |
+| employee           |
+| employeeinfo       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| persons            |
+| sakila             |
+| sys                |
+| world              |
+| zy                 |
++--------------------+
+11 rows in set (0.02 sec)
+
+mysql> use company;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_company       |
++-------------------------+
+| address                 |
+| companyinfo             |
+| departmentalinformation |
+| educationalbackground   |
+| employeeinfo            |
+| professionalbackground  |
+| salary                  |
++-------------------------+
+7 rows in set (0.01 sec)
+
+mysql> desc address;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| employeeid  | char(10)     | YES  | MUL | NULL    |       |
+| houseno     | varchar(200) | NO   | PRI | NULL    |       |
+| city        | varchar(200) | NO   |     | NULL    |       |
+| state       | varchar(200) | NO   |     | NULL    |       |
+| pincode     | varchar(10)  | NO   |     | NULL    |       |
+| addresstype | varchar(200) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> desc companyinfo;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| companyname   | varchar(200) | NO   |     | NULL    |       |
+| headquarters  | varchar(200) | NO   |     | NULL    |       |
+| phnno         | int          | NO   | PRI | NULL    |       |
+| established   | varchar(200) | NO   |     | NULL    |       |
+| noofemployees | int          | NO   |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc departmentalinformation;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| deptid       | char(10)     | NO   | PRI | NULL    |       |
+| deptcode     | char(5)      | NO   |     | NULL    |       |
+| name         | varchar(100) | NO   |     | NULL    |       |
+| parentdeptid | char(5)      | NO   |     | NULL    |       |
+| employeeid   | char(10)     | YES  | MUL | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc educationalbackground;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| university  | varchar(200)  | NO   |     | NULL    |       |
+| course      | varchar(200)  | NO   |     | NULL    |       |
+| startdate   | date          | NO   |     | NULL    |       |
+| enddate     | date          | NO   |     | NULL    |       |
+| description | varchar(2000) | NO   |     | NULL    |       |
+| eduid       | int           | NO   | PRI | NULL    |       |
+| employeeid  | char(10)      | YES  | MUL | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> desc employeeinfo;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| employeeid       | char(10)     | NO   | PRI | NULL    |       |
+| name             | varchar(200) | NO   |     | NULL    |       |
+| lastname         | varchar(100) | NO   |     | NULL    |       |
+| phnno            | int          | NO   | UNI | NULL    |       |
+| temporaryaddress | varchar(200) | NO   |     | NULL    |       |
+| emailid          | varchar(200) | NO   | UNI | NULL    |       |
+| DOB              | date         | NO   |     | NULL    |       |
+| joiningdate      | date         | NO   |     | NULL    |       |
+| aadharno         | int          | NO   | UNI | NULL    |       |
+| panno            | int          | NO   | UNI | NULL    |       |
+| leavingdate      | date         | YES  |     | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT employeeinfo.name, educationalbackground.university, employeeinfo.phnno
+    -> FROM employeeinfo
+    -> INNER JOIN educationalbackground
+    -> ON employeeinfo.employeeid=educationalbackground.employeeid;
++----------+------------------------+-----------+
+| name     | university             | phnno     |
++----------+------------------------+-----------+
+| himanshu | KURUKSHETRA UNIVERSITY | 905087229 |
+| gaurav   | KURUKSHETRA UNIVERSITY | 905087119 |
+| divyansh | MMU UNIVERSITY         | 902087119 |
+| gourav   | MMU UNIVERSITY         | 402087119 |
+| rohit    | PIET                   | 905087549 |
++----------+------------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> desc salary;
++------------+----------+------+-----+---------+-------+
+| Field      | Type     | Null | Key | Default | Extra |
++------------+----------+------+-----+---------+-------+
+| salid      | char(5)  | NO   | PRI | NULL    |       |
+| salary     | int      | NO   |     | NULL    |       |
+| startdate  | date     | NO   |     | NULL    |       |
+| enddate    | date     | NO   |     | NULL    |       |
+| employeeid | char(10) | YES  | MUL | NULL    |       |
++------------+----------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc professionalbackground;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| companyid     | int          | NO   | PRI | NULL    |       |
+| roleincompany | varchar(200) | NO   |     | NULL    |       |
+| location      | varchar(200) | NO   |     | NULL    |       |
+| startdate     | date         | NO   |     | NULL    |       |
+| enddate       | date         | NO   |     | NULL    |       |
+| description   | varchar(200) | NO   |     | NULL    |       |
+| employeeid    | char(10)     | YES  | MUL | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT employeeinfo.lastname, employeeinfo.DOB, professionalbackground.description
+    -> FROM employeeinfo
+    -> LEFT JOIN professionalbackground
+    -> ON employeeinfo.employeeid=professionalbackground.employeeid;
++----------+------------+---------------------------------+
+| lastname | DOB        | description                     |
++----------+------------+---------------------------------+
+| dhull    | 1999-08-08 | iam currentlyworkig at walmart  |
+| sharma   | 1997-02-08 | iam currentlyworkig at apple    |
+| goyal    | 1998-02-02 | iam currentlyworkig at paypal   |
+| kumar    | 1992-11-11 | iam currentlyworkig at facebook |
+| kumar    | 1992-12-12 | iam currentlyworkig at google   |
++----------+------------+---------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT employeeinfo.joiningdate, employeeinfo.aadharno, educationalbackground.course
+    -> FROM employeeinfo
+    -> RIGHT JOIN educationalbackground
+    -> ON employeeinfo.employeeid=educationalbackground.employeeid;
++-------------+----------+--------+
+| joiningdate | aadharno | course |
++-------------+----------+--------+
+| 2020-04-03  |   122335 | BCA    |
+| 2012-01-01  |   127745 | MBA    |
+| 2014-04-08  |   127795 | bsc    |
+| 2014-06-06  |   127705 | bsc    |
+| 2010-02-02  |   122345 | Btech  |
++-------------+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT employeeinfo.DOB, employeeinfo.temporaryaddress,address.city, address.state
+    -> FROM employeeinfo
+    -> FULL OUTER JOIN address ON employeeinfo.employeeid=address.employeeid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OUTER JOIN address ON employeeinfo.employeeid=address.employeeid' at line 3
+mysql> SELECT employeeinfo.DOB, employeeinfo.temporaryaddress,address.city, address.state
+    -> FROM employeeinfo
+    -> FULL OUTER JOIN address
+    -> ON employeeinfo.employeeid=address.employeeid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OUTER JOIN address
+ON employeeinfo.employeeid=address.employeeid' at line 3
+mysql> SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+    -> FROM Customers A, Customers B
+    -> WHERE A.CustomerID <> B.CustomerID
+    -> AND A.City = B.City
+    -> '''
+    '> ;
+    '>
+    '> ;;;'
+    -> ';
+    '> ;;
+    '> '''
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''''
+;
+
+;;;'
+';
+;;
+'''' at line 5
+mysql> SELECT A.location AS location1, B.location AS location2, A,
+    -> SELECT A.location AS location1, B.location AS location2, A,;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT A.location AS location1, B.location AS location2, A,' at line 2
+mysql> SELECT A.location AS location1, B.location AS location2, A, A.description
+    -> FROM profesionalbackground A, professionalbackground B
+    -> WHERE A.companyid <> B.companyid
+    -> AND A.description = B.description
+    -> ORDER BY A.description;
+ERROR 1146 (42S02): Table 'company.profesionalbackground' doesn't exist
+mysql> SELECT A.location AS location1, B.location AS location2, A, A.description
+    -> FROM professionalbackground A, professionalbackground B
+    -> AND A.description = B.description
+    -> ORDER BY A.description;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AND A.description = B.description
+ORDER BY A.description' at line 3
+mysql> SELECT A.location AS location1, B.location AS location2, A, A.description
+    -> FROM professionalbackground A, professionalbackground B
+    -> WHERE A.companyid <> B.companyid
+    -> AND A.description = B.description
+    -> ORDER BY A.description;
+ERROR 1054 (42S22): Unknown column 'A' in 'field list'
+mysql> SELECT A.location AS location1, B.location AS location2, A, A.description
+    -> FROM professionalbackground A, professionalbackground B
+    -> ORDER BY A.description;
+ERROR 1054 (42S22): Unknown column 'A' in 'field list'
+mysql> SELECT A.location AS location1, B.location AS location2, A, A.description
+    -> FROM professionalbackground A, professionalbackground B
+    -> WHERE A.companyid <> B.companyid
+    -> AND A.description = B.description
+    -> ORDER BY A.description;
+ERROR 1054 (42S22): Unknown column 'A' in 'field list'
+mysql> SELECT A.location AS location1, B.location AS location2, A, A.description
+    -> FROM professionalbackground A, professionalbackground B;
+ERROR 1054 (42S22): Unknown column 'A' in 'field list'
+mysql> SELECT A.location AS location1, B.location AS location2, A.description
+    -> FROM professionalbackground A, professionalbackground B;
++-----------+-----------+---------------------------------+
+| location1 | location2 | description                     |
++-----------+-----------+---------------------------------+
+| austria   | austria   | iam currentlyworkig at walmart  |
+| delhi     | austria   | iam currentlyworkig at apple    |
+| hyderabad | austria   | iam currentlyworkig at paypal   |
+| new york  | austria   | iam currentlyworkig at facebook |
+| tokyo     | austria   | iam currentlyworkig at google   |
+| austria   | delhi     | iam currentlyworkig at walmart  |
+| delhi     | delhi     | iam currentlyworkig at apple    |
+| hyderabad | delhi     | iam currentlyworkig at paypal   |
+| new york  | delhi     | iam currentlyworkig at facebook |
+| tokyo     | delhi     | iam currentlyworkig at google   |
+| austria   | hyderabad | iam currentlyworkig at walmart  |
+| delhi     | hyderabad | iam currentlyworkig at apple    |
+| hyderabad | hyderabad | iam currentlyworkig at paypal   |
+| new york  | hyderabad | iam currentlyworkig at facebook |
+| tokyo     | hyderabad | iam currentlyworkig at google   |
+| austria   | new york  | iam currentlyworkig at walmart  |
+| delhi     | new york  | iam currentlyworkig at apple    |
+| hyderabad | new york  | iam currentlyworkig at paypal   |
+| new york  | new york  | iam currentlyworkig at facebook |
+| tokyo     | new york  | iam currentlyworkig at google   |
+| austria   | tokyo     | iam currentlyworkig at walmart  |
+| delhi     | tokyo     | iam currentlyworkig at apple    |
+| hyderabad | tokyo     | iam currentlyworkig at paypal   |
+| new york  | tokyo     | iam currentlyworkig at facebook |
+| tokyo     | tokyo     | iam currentlyworkig at google   |
++-----------+-----------+---------------------------------+
+25 rows in set (0.00 sec)
+
+mysql> SELECT A.location AS location1, B.location AS location2, A.description
+    -> FROM professionalbackground A, professionalbackground B
+    -> ORDER BY A.description;
++-----------+-----------+---------------------------------+
+| location1 | location2 | description                     |
++-----------+-----------+---------------------------------+
+| delhi     | austria   | iam currentlyworkig at apple    |
+| delhi     | delhi     | iam currentlyworkig at apple    |
+| delhi     | hyderabad | iam currentlyworkig at apple    |
+| delhi     | new york  | iam currentlyworkig at apple    |
+| delhi     | tokyo     | iam currentlyworkig at apple    |
+| new york  | austria   | iam currentlyworkig at facebook |
+| new york  | delhi     | iam currentlyworkig at facebook |
+| new york  | hyderabad | iam currentlyworkig at facebook |
+| new york  | new york  | iam currentlyworkig at facebook |
+| new york  | tokyo     | iam currentlyworkig at facebook |
+| tokyo     | austria   | iam currentlyworkig at google   |
+| tokyo     | delhi     | iam currentlyworkig at google   |
+| tokyo     | hyderabad | iam currentlyworkig at google   |
+| tokyo     | new york  | iam currentlyworkig at google   |
+| tokyo     | tokyo     | iam currentlyworkig at google   |
+| hyderabad | austria   | iam currentlyworkig at paypal   |
+| hyderabad | delhi     | iam currentlyworkig at paypal   |
+| hyderabad | hyderabad | iam currentlyworkig at paypal   |
+| hyderabad | new york  | iam currentlyworkig at paypal   |
+| hyderabad | tokyo     | iam currentlyworkig at paypal   |
+| austria   | austria   | iam currentlyworkig at walmart  |
+| austria   | delhi     | iam currentlyworkig at walmart  |
+| austria   | hyderabad | iam currentlyworkig at walmart  |
+| austria   | new york  | iam currentlyworkig at walmart  |
+| austria   | tokyo     | iam currentlyworkig at walmart  |
++-----------+-----------+---------------------------------+
+25 rows in set (0.00 sec)
+
+mysql> SELECT A.location AS location1, B.location AS location2, A.description
+    -> FROM professionalbackground A, professionalbackground B
+    -> WHERE A.companyid <> B.companyid
+    -> AND A.description = B.description
+    -> ORDER BY A.description;
+Empty set (0.00 sec)
+
+mysql> mysql> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> show databases' at line 1
+mysql> +--------------------+
+    -> | Database           |
+    -> +--------------------+
+    -> | company            |
+    -> | employee           |
+    -> | employeeinfo       |
+    -> | information_schema |
+    -> | mysql              |
+    -> | performance_schema |
+    -> | persons            |
+    -> | sakila             |
+    -> | sys                |
+    -> | world              |
+    -> | zy                 |
+    -> +--------------------+
+    -> 11 rows in set (0.01 sec)
+    ->
+    -> mysql> use employeeinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Database           |
++--------------------+
+| company  ' at line 1
+mysql> Database changed
+    -> mysql> showtables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> showtables' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'showtables' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> +------------------------+
+    -> | Tables_in_employeeinfo |
+    -> +------------------------+
+    -> | employeeinformation    |
+    -> +------------------------+
+    -> 1 row in set (0.01 sec)
+    ->
+    -> mysql> desc employeeinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------+
+| Tables_in_employeeinfo |
++------------------------+' at line 1
+mysql> +--------------+--------------+------+-----+---------+-------+
+    -> | Field        | Type         | Null | Key | Default | Extra |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> | Employeename | varchar(300) | NO   |     | NULL    |       |
+    -> | lastname     | char(200)    | YES  |     | NULL    |       |
+    -> | age          | int          | YES  |     | NULL    |       |
+    -> | Adress       | varchar(500) | NO   |     | NULL    |       |
+    -> | city         | varchar(200) | NO   |     | NULL    |       |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.01 sec)
+    ->
+    -> mysql> use employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------+--------------+------+-----+---------+-------+
+| Field        | ' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +--------------------+
+    -> | Tables_in_employee |
+    -> +--------------------+
+    -> | employeedata       |
+    -> +--------------------+
+    -> 1 row in set (0.00 sec)
+    ->
+    -> mysql> use company;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Tables_in_employee |
++--------------------+
+| employeed' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +-------------------------+
+    -> | Tables_in_company       |
+    -> +-------------------------+
+    -> | address                 |
+    -> | companyinfo             |
+    -> | departmentalinformation |
+    -> | educationalbackground   |
+    -> | employeeinfo            |
+    -> | professionalbackground  |
+    -> | salary                  |
+    -> +-------------------------+
+    -> 7 rows in set (0.00 sec)
+    ->
+    -> mysql> desc address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------------------+
+| Tables_in_company       |
++-----------------------' at line 1
+mysql> +-------------+--------------+------+-----+---------+-------+
+    -> | Field       | Type         | Null | Key | Default | Extra |
+    -> +-------------+--------------+------+-----+---------+-------+
+    -> | employeeid  | char(10)     | YES  | MUL | NULL    |       |
+    -> | houseno     | varchar(200) | NO   | PRI | NULL    |       |
+    -> | city        | varchar(200) | NO   |     | NULL    |       |
+    -> | state       | varchar(200) | NO   |     | NULL    |       |
+    -> | pincode     | varchar(10)  | NO   |     | NULL    |       |
+    -> | addresstype | varchar(200) | NO   |     | NULL    |       |
+    -> +-------------+--------------+------+-----+---------+-------+
+    -> 6 rows in set (0.00 sec)
+    ->
+    -> mysql> show values;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+--------------+------+-----+---------+-------+
+| Field       | Ty' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> SELECT * FROM[address];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address]' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> SELECT * FROM[address] WHERE[houseno]="value";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address] WHERE[houseno]="value"' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> desc companyinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> +---------------+--------------+------+-----+---------+-------+
+    -> | Field         | Type         | Null | Key | Default | Extra |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> | companyname   | varchar(200) | NO   |     | NULL    |       |
+    -> | headquarters  | varchar(200) | NO   |     | NULL    |       |
+    -> | phnno         | int          | NO   | PRI | NULL    |       |
+    -> | established   | varchar(200) | NO   |     | NULL    |       |
+    -> | noofemployees | int          | NO   |     | NULL    |       |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM companyinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+---------------+--------------+------+-----+---------+-------+
+| Field         ' at line 1
+mysql> +-------------+--------------+---------+-------------+---------------+
+    -> | companyname | headquarters | phnno   | established | noofemployees |
+    -> +-------------+--------------+---------+-------------+---------------+
+    -> | facebook    | new york     | 2345228 | 2008        |          2300 |
+    -> | google      | california   | 2345638 | 2008        |          1300 |
+    -> | amazon      | sanfrancisco | 2345678 | 1999        |         10000 |
+    -> | apple       | new jersey   | 2349928 | 2018        |          2200 |
+    -> +-------------+--------------+---------+-------------+---------------+
+    -> 4 rows in set (0.00 sec)
+    ->
+    -> mysql> INSERT INTO companyinfo(companyname, headquarters, phnno, established, noofemployees)
+    ->     -> VALUE ('paytm','delhi','84638922','2010','10000');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+--------------+---------+-------------+---------------+
+| company' at line 1
+mysql> Query OK, 1 row affected (0.01 sec)
+    ->
+    -> mysql> desc departmentalinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.01 sec)
+
+mysql> desc departmentalinformation' at line 1
+mysql> +--------------+--------------+------+-----+---------+-------+
+    -> | Field        | Type         | Null | Key | Default | Extra |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> | deptid       | char(10)     | NO   | PRI | NULL    |       |
+    -> | deptcode     | char(5)      | NO   |     | NULL    |       |
+    -> | name         | varchar(100) | NO   |     | NULL    |       |
+    -> | parentdeptid | char(5)      | NO   |     | NULL    |       |
+    -> | employeeid   | char(10)     | YES  | MUL | NULL    |       |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM departmentalinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------+--------------+------+-----+---------+-------+
+| Field        | ' at line 1
+mysql> Empty set (0.00 sec)
+    ->
+    -> mysql> desc educationalbackground;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Empty set (0.00 sec)
+
+mysql> desc educationalbackground' at line 1
+mysql> +-------------+---------------+------+-----+---------+-------+
+    -> | Field       | Type          | Null | Key | Default | Extra |
+    -> +-------------+---------------+------+-----+---------+-------+
+    -> | university  | varchar(200)  | NO   |     | NULL    |       |
+    -> | course      | varchar(200)  | NO   |     | NULL    |       |
+    -> | startdate   | date          | NO   |     | NULL    |       |
+    -> | enddate     | date          | NO   |     | NULL    |       |
+    -> | description | varchar(2000) | NO   |     | NULL    |       |
+    -> | eduid       | int           | NO   | PRI | NULL    |       |
+    -> | employeeid  | char(10)      | YES  | MUL | NULL    |       |
+    -> +-------------+---------------+------+-----+---------+-------+
+    -> 7 rows in set (0.00 sec)
+    ->
+    -> mysql> desc employeeinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+---------------+------+-----+---------+-------+
+| Field       | T' at line 1
+mysql> +------------------+--------------+------+-----+---------+-------+
+    -> | Field            | Type         | Null | Key | Default | Extra |
+    -> +------------------+--------------+------+-----+---------+-------+
+    -> | employeeid       | char(10)     | NO   | PRI | NULL    |       |
+    -> | name             | varchar(200) | NO   |     | NULL    |       |
+    -> | lastname         | varchar(100) | NO   |     | NULL    |       |
+    -> | phnno            | int          | NO   | UNI | NULL    |       |
+    -> | temporaryaddress | varchar(200) | NO   |     | NULL    |       |
+    -> | emailid          | varchar(200) | NO   | UNI | NULL    |       |
+    -> | DOB              | date         | NO   |     | NULL    |       |
+    -> | joiningdate      | date         | NO   |     | NULL    |       |
+    -> | leavingdate      | date         | NO   |     | NULL    |       |
+    -> | aadharno         | int          | NO   | UNI | NULL    |       |
+    -> | panno            | int          | NO   | UNI | NULL    |       |
+    -> +------------------+--------------+------+-----+---------+-------+
+    -> 11 rows in set (0.00 sec)
+    ->
+    -> mysql> desc proffessionalbackground;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------+--------------+------+-----+---------+-------+
+| Field      ' at line 1
+mysql> ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+    '> mysql> desc professionalbackground;
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> | Field         | Type         | Null | Key | Default | Extra |
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> | companyid     | int          | NO   | PRI | NULL    |       |
+    '> | roleincompany | varchar(200) | NO   |     | NULL    |       |
+    '> | location      | varchar(200) | NO   |     | NULL    |       |
+    '> | startdate     | date         | NO   |     | NULL    |       |
+    '> | enddate       | date         | NO   |     | NULL    |       |
+    '> | description   | varchar(200) | NO   |     | NULL    |       |
+    '> | employeeid    | char(10)     | YES  | MUL | NULL    |       |
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> 7 rows in set (0.00 sec)
+    '>
+    '> mysql> desc salary;
+    '> +------------+----------+------+-----+---------+-------+
+    '> | Field      | Type     | Null | Key | Default | Extra |
+    '> +------------+----------+------+-----+---------+-------+
+    '> | salid      | char(5)  | NO   | PRI | NULL    |       |
+    '> | salary     | int      | NO   |     | NULL    |       |
+    '> | startdate  | date     | NO   |     | NULL    |       |
+    '> | enddate    | date     | NO   |     | NULL    |       |
+    '> | employeeid | char(10) | YES  | MUL | NULL    |       |
+    '> +------------+----------+------+-----+---------+-------+
+    '> 5 rows in set (0.00 sec)
+    '>
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','08061999','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '08061999' for column 'DOB' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','8 july 1999','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '8 july 1999' for column 'DOB' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '1 jan' for column 'joiningdate' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaymysql> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+mysql>' at line 1
+mysql> +--------------------+
+    -> | Database           |
+    -> +--------------------+
+    -> | company            |
+    -> | employee           |
+    -> | employeeinfo       |
+    -> | information_schema |
+    -> | mysql              |
+    -> | performance_schema |
+    -> | persons            |
+    -> | sakila             |
+    -> | sys                |
+    -> | world              |
+    -> | zy                 |
+    -> +--------------------+
+    -> 11 rows in set (0.01 sec)
+    ->
+    -> mysql> use employeeinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Database           |
++--------------------+
+| company  ' at line 1
+mysql> Database changed
+    -> mysql> showtables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> showtables' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'showtables' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> +------------------------+
+    -> | Tables_in_employeeinfo |
+    -> +------------------------+
+    -> | employeeinformation    |
+    -> +------------------------+
+    -> 1 row in set (0.01 sec)
+    ->
+    -> mysql> desc employeeinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------+
+| Tables_in_employeeinfo |
++------------------------+' at line 1
+mysql> +--------------+--------------+------+-----+---------+-------+
+    -> | Field        | Type         | Null | Key | Default | Extra |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> | Employeename | varchar(300) | NO   |     | NULL    |       |
+    -> | lastname     | char(200)    | YES  |     | NULL    |       |
+    -> | age          | int          | YES  |     | NULL    |       |
+    -> | Adress       | varchar(500) | NO   |     | NULL    |       |
+    -> | city         | varchar(200) | NO   |     | NULL    |       |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.01 sec)
+    ->
+    -> mysql> use employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------+--------------+------+-----+---------+-------+
+| Field        | ' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +--------------------+
+    -> | Tables_in_employee |
+    -> +--------------------+
+    -> | employeedata       |
+    -> +--------------------+
+    -> 1 row in set (0.00 sec)
+    ->
+    -> mysql> use company;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Tables_in_employee |
++--------------------+
+| employeed' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +-------------------------+
+    -> | Tables_in_company       |
+    -> +-------------------------+
+    -> | address                 |
+    -> | companyinfo             |
+    -> | departmentalinformation |
+    -> | educationalbackground   |
+    -> | employeeinfo            |
+    -> | professionalbackground  |
+    -> | salary                  |
+    -> +-------------------------+
+    -> 7 rows in set (0.00 sec)
+    ->
+    -> mysql> desc address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------------------+
+| Tables_in_company       |
++-----------------------' at line 1
+mysql> +-------------+--------------+------+-----+---------+-------+
+    -> | Field       | Type         | Null | Key | Default | Extra |
+    -> +-------------+--------------+------+-----+---------+-------+
+    -> | employeeid  | char(10)     | YES  | MUL | NULL    |       |
+    -> | houseno     | varchar(200) | NO   | PRI | NULL    |       |
+    -> | city        | varchar(200) | NO   |     | NULL    |       |
+    -> | state       | varchar(200) | NO   |     | NULL    |       |
+    -> | pincode     | varchar(10)  | NO   |     | NULL    |       |
+    -> | addresstype | varchar(200) | NO   |     | NULL    |       |
+    -> +-------------+--------------+------+-----+---------+-------+
+    -> 6 rows in set (0.00 sec)
+    ->
+    -> mysql> show values;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+--------------+------+-----+---------+-------+
+| Field       | Ty' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> SELECT * FROM[address];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address]' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> SELECT * FROM[address] WHERE[houseno]="value";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address] WHERE[houseno]="value"' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> desc companyinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> +---------------+--------------+------+-----+---------+-------+
+    -> | Field         | Type         | Null | Key | Default | Extra |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> | companyname   | varchar(200) | NO   |     | NULL    |       |
+    -> | headquarters  | varchar(200) | NO   |     | NULL    |       |
+    -> | phnno         | int          | NO   | PRI | NULL    |       |
+    -> | established   | varchar(200) | NO   |     | NULL    |       |
+    -> | noofemployees | int          | NO   |     | NULL    |       |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM companyinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+---------------+--------------+------+-----+---------+-------+
+| Field         ' at line 1
+mysql> +-------------+--------------+---------+-------------+---------------+
+    -> | companyname | headquarters | phnno   | established | noofemployees |
+    -> +-------------+--------------+---------+-------------+---------------+
+    -> | facebook    | new york     | 2345228 | 2008        |          2300 |
+    -> | google      | california   | 2345638 | 2008        |          1300 |
+    -> | amazon      | sanfrancisco | 2345678 | 1999        |         10000 |
+    -> | apple       | new jersey   | 2349928 | 2018        |          2200 |
+    -> +-------------+--------------+---------+-------------+---------------+
+    -> 4 rows in set (0.00 sec)
+    ->
+    -> mysql> INSERT INTO companyinfo(companyname, headquarters, phnno, established, noofemployees)
+    ->     -> VALUE ('paytm','delhi','84638922','2010','10000');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+--------------+---------+-------------+---------------+
+| company' at line 1
+mysql> Query OK, 1 row affected (0.01 sec)
+    ->
+    -> mysql> desc departmentalinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.01 sec)
+
+mysql> desc departmentalinformation' at line 1
+mysql> +--------------+--------------+------+-----+---------+-------+
+    -> | Field        | Type         | Null | Key | Default | Extra |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> | deptid       | char(10)     | NO   | PRI | NULL    |       |
+    -> | deptcode     | char(5)      | NO   |     | NULL    |       |
+    -> | name         | varchar(100) | NO   |     | NULL    |       |
+    -> | parentdeptid | char(5)      | NO   |     | NULL    |       |
+    -> | employeeid   | char(10)     | YES  | MUL | NULL    |       |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM departmentalinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------+--------------+------+-----+---------+-------+
+| Field        | ' at line 1
+mysql> Empty set (0.00 sec)
+    ->
+    -> mysql> desc educationalbackground;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Empty set (0.00 sec)
+
+mysql> desc educationalbackground' at line 1
+mysql> +-------------+---------------+------+-----+---------+-------+
+    -> | Field       | Type          | Null | Key | Default | Extra |
+    -> +-------------+---------------+------+-----+---------+-------+
+    -> | university  | varchar(200)  | NO   |     | NULL    |       |
+    -> | course      | varchar(200)  | NO   |     | NULL    |       |
+    -> | startdate   | date          | NO   |     | NULL    |       |
+    -> | enddate     | date          | NO   |     | NULL    |       |
+    -> | description | varchar(2000) | NO   |     | NULL    |       |
+    -> | eduid       | int           | NO   | PRI | NULL    |       |
+    -> | employeeid  | char(10)      | YES  | MUL | NULL    |       |
+    -> +-------------+---------------+------+-----+---------+-------+
+    -> 7 rows in set (0.00 sec)
+    ->
+    -> mysql> desc employeeinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+---------------+------+-----+---------+-------+
+| Field       | T' at line 1
+mysql> +------------------+--------------+------+-----+---------+-------+
+    -> | Field            | Type         | Null | Key | Default | Extra |
+    -> +------------------+--------------+------+-----+---------+-------+
+    -> | employeeid       | char(10)     | NO   | PRI | NULL    |       |
+    -> | name             | varchar(200) | NO   |     | NULL    |       |
+    -> | lastname         | varchar(100) | NO   |     | NULL    |       |
+    -> | phnno            | int          | NO   | UNI | NULL    |       |
+    -> | temporaryaddress | varchar(200) | NO   |     | NULL    |       |
+    -> | emailid          | varchar(200) | NO   | UNI | NULL    |       |
+    -> | DOB              | date         | NO   |     | NULL    |       |
+    -> | joiningdate      | date         | NO   |     | NULL    |       |
+    -> | leavingdate      | date         | NO   |     | NULL    |       |
+    -> | aadharno         | int          | NO   | UNI | NULL    |       |
+    -> | panno            | int          | NO   | UNI | NULL    |       |
+    -> +------------------+--------------+------+-----+---------+-------+
+    -> 11 rows in set (0.00 sec)
+    ->
+    -> mysql> desc proffessionalbackground;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------+--------------+------+-----+---------+-------+
+| Field      ' at line 1
+mysql> ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+    '> mysql> desc professionalbackground;
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> | Field         | Type         | Null | Key | Default | Extra |
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> | companyid     | int          | NO   | PRI | NULL    |       |
+    '> | roleincompany | varchar(200) | NO   |     | NULL    |       |
+    '> | location      | varchar(200) | NO   |     | NULL    |       |
+    '> | startdate     | date         | NO   |     | NULL    |       |
+    '> | enddate       | date         | NO   |     | NULL    |       |
+    '> | description   | varchar(200) | NO   |     | NULL    |       |
+    '> | employeeid    | char(10)     | YES  | MUL | NULL    |       |
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> 7 rows in set (0.00 sec)
+    '>
+    '> mysql> desc salary;
+    '> +------------+----------+------+-----+---------+-------+
+    '> | Field      | Type     | Null | Key | Default | Extra |
+    '> +------------+----------+------+-----+---------+-------+
+    '> | salid      | char(5)  | NO   | PRI | NULL    |       |
+    '> | salary     | int      | NO   |     | NULL    |       |
+    '> | startdate  | date     | NO   |     | NULL    |       |
+    '> | enddate    | date     | NO   |     | NULL    |       |
+    '> | employeeid | char(10) | YES  | MUL | NULL    |       |
+    '> +------------+----------+------+-----+---------+-------+
+    '> 5 rows in set (0.00 sec)
+    '>
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','08061999','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '08061999' for column 'DOB' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','8 july 1999','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '8 july 1999' for column 'DOB' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '1 jan' for column 'joiningdate' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaymysql> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+mysql>' at line 1
+mysql> +--------------------+
+    -> | Database           |
+    -> +--------------------+
+    -> | company            |
+    -> | employee           |
+    -> | employeeinfo       |
+    -> | information_schema |
+    -> | mysql              |
+    -> | performance_schema |
+    -> | persons            |
+    -> | sakila             |
+    -> | sys                |
+    -> | world              |
+    -> | zy                 |
+    -> +--------------------+
+    -> 11 rows in set (0.01 sec)
+    ->
+    -> mysql> use employeeinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Database           |
++--------------------+
+| company  ' at line 1
+mysql> Database changed
+    -> mysql> showtables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> showtables' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'showtables' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> +------------------------+
+    -> | Tables_in_employeeinfo |
+    -> +------------------------+
+    -> | employeeinformation    |
+    -> +------------------------+
+    -> 1 row in set (0.01 sec)
+    ->
+    -> mysql> desc employeeinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------+
+| Tables_in_employeeinfo |
++------------------------+' at line 1
+mysql> +--------------+--------------+------+-----+---------+-------+
+    -> | Field        | Type         | Null | Key | Default | Extra |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> | Employeename | varchar(300) | NO   |     | NULL    |       |
+    -> | lastname     | char(200)    | YES  |     | NULL    |       |
+    -> | age          | int          | YES  |     | NULL    |       |
+    -> | Adress       | varchar(500) | NO   |     | NULL    |       |
+    -> | city         | varchar(200) | NO   |     | NULL    |       |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.01 sec)
+    ->
+    -> mysql> use employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------+--------------+------+-----+---------+-------+
+| Field        | ' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +--------------------+
+    -> | Tables_in_employee |
+    -> +--------------------+
+    -> | employeedata       |
+    -> +--------------------+
+    -> 1 row in set (0.00 sec)
+    ->
+    -> mysql> use company;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Tables_in_employee |
++--------------------+
+| employeed' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +-------------------------+
+    -> | Tables_in_company       |
+    -> +-------------------------+
+    -> | address                 |
+    -> | companyinfo             |
+    -> | departmentalinformation |
+    -> | educationalbackground   |
+    -> | employeeinfo            |
+    -> | professionalbackground  |
+    -> | salary                  |
+    -> +-------------------------+
+    -> 7 rows in set (0.00 sec)
+    ->
+    -> mysql> desc address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------------------+
+| Tables_in_company       |
++-----------------------' at line 1
+mysql> +-------------+--------------+------+-----+---------+-------+
+    -> | Field       | Type         | Null | Key | Default | Extra |
+    -> +-------------+--------------+------+-----+---------+-------+
+    -> | employeeid  | char(10)     | YES  | MUL | NULL    |       |
+    -> | houseno     | varchar(200) | NO   | PRI | NULL    |       |
+    -> | city        | varchar(200) | NO   |     | NULL    |       |
+    -> | state       | varchar(200) | NO   |     | NULL    |       |
+    -> | pincode     | varchar(10)  | NO   |     | NULL    |       |
+    -> | addresstype | varchar(200) | NO   |     | NULL    |       |
+    -> +-------------+--------------+------+-----+---------+-------+
+    -> 6 rows in set (0.00 sec)
+    ->
+    -> mysql> show values;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+--------------+------+-----+---------+-------+
+| Field       | Ty' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> SELECT * FROM[address];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address]' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> SELECT * FROM[address] WHERE[houseno]="value";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address] WHERE[houseno]="value"' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> desc companyinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> +---------------+--------------+------+-----+---------+-------+
+    -> | Field         | Type         | Null | Key | Default | Extra |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> | companyname   | varchar(200) | NO   |     | NULL    |       |
+    -> | headquarters  | varchar(200) | NO   |     | NULL    |       |
+    -> | phnno         | int          | NO   | PRI | NULL    |       |
+    -> | established   | varchar(200) | NO   |     | NULL    |       |
+    -> | noofemployees | int          | NO   |     | NULL    |       |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM companyinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+---------------+--------------+------+-----+---------+-------+
+| Field         ' at line 1
+mysql> +-------------+--------------+---------+-------------+---------------+
+    -> | companyname | headquarters | phnno   | established | noofemployees |
+    -> +-------------+--------------+---------+-------------+---------------+
+    -> | facebook    | new york     | 2345228 | 2008        |          2300 |
+    -> | google      | california   | 2345638 | 2008        |          1300 |
+    -> | amazon      | sanfrancisco | 2345678 | 1999        |         10000 |
+    -> | apple       | new jersey   | 2349928 | 2018        |          2200 |
+    -> +-------------+--------------+---------+-------------+---------------+
+    -> 4 rows in set (0.00 sec)
+    ->
+    -> mysql> INSERT INTO companyinfo(companyname, headquarters, phnno, established, noofemployees)
+    ->     -> VALUE ('paytm','delhi','84638922','2010','10000');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+--------------+---------+-------------+---------------+
+| company' at line 1
+mysql> Query OK, 1 row affected (0.01 sec)
+    ->
+    -> mysql> desc departmentalinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.01 sec)
+
+mysql> desc departmentalinformation' at line 1
+mysql> +--------------+--------------+------+-----+---------+-------+
+    -> | Field        | Type         | Null | Key | Default | Extra |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> | deptid       | char(10)     | NO   | PRI | NULL    |       |
+    -> | deptcode     | char(5)      | NO   |     | NULL    |       |
+    -> | name         | varchar(100) | NO   |     | NULL    |       |
+    -> | parentdeptid | char(5)      | NO   |     | NULL    |       |
+    -> | employeeid   | char(10)     | YES  | MUL | NULL    |       |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM departmentalinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------+--------------+------+-----+---------+-------+
+| Field        | ' at line 1
+mysql> Empty set (0.00 sec)
+    ->
+    -> mysql> desc educationalbackground;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Empty set (0.00 sec)
+
+mysql> desc educationalbackground' at line 1
+mysql> +-------------+---------------+------+-----+---------+-------+
+    -> | Field       | Type          | Null | Key | Default | Extra |
+    -> +-------------+---------------+------+-----+---------+-------+
+    -> | university  | varchar(200)  | NO   |     | NULL    |       |
+    -> | course      | varchar(200)  | NO   |     | NULL    |       |
+    -> | startdate   | date          | NO   |     | NULL    |       |
+    -> | enddate     | date          | NO   |     | NULL    |       |
+    -> | description | varchar(2000) | NO   |     | NULL    |       |
+    -> | eduid       | int           | NO   | PRI | NULL    |       |
+    -> | employeeid  | char(10)      | YES  | MUL | NULL    |       |
+    -> +-------------+---------------+------+-----+---------+-------+
+    -> 7 rows in set (0.00 sec)
+    ->
+    -> mysql> desc employeeinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+---------------+------+-----+---------+-------+
+| Field       | T' at line 1
+mysql> +------------------+--------------+------+-----+---------+-------+
+    -> | Field            | Type         | Null | Key | Default | Extra |
+    -> +------------------+--------------+------+-----+---------+-------+
+    -> | employeeid       | char(10)     | NO   | PRI | NULL    |       |
+    -> | name             | varchar(200) | NO   |     | NULL    |       |
+    -> | lastname         | varchar(100) | NO   |     | NULL    |       |
+    -> | phnno            | int          | NO   | UNI | NULL    |       |
+    -> | temporaryaddress | varchar(200) | NO   |     | NULL    |       |
+    -> | emailid          | varchar(200) | NO   | UNI | NULL    |       |
+    -> | DOB              | date         | NO   |     | NULL    |       |
+    -> | joiningdate      | date         | NO   |     | NULL    |       |
+    -> | leavingdate      | date         | NO   |     | NULL    |       |
+    -> | aadharno         | int          | NO   | UNI | NULL    |       |
+    -> | panno            | int          | NO   | UNI | NULL    |       |
+    -> +------------------+--------------+------+-----+---------+-------+
+    -> 11 rows in set (0.00 sec)
+    ->
+    -> mysql> desc proffessionalbackground;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------+--------------+------+-----+---------+-------+
+| Field      ' at line 1
+mysql> ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+    '> mysql> desc professionalbackground;
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> | Field         | Type         | Null | Key | Default | Extra |
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> | companyid     | int          | NO   | PRI | NULL    |       |
+    '> | roleincompany | varchar(200) | NO   |     | NULL    |       |
+    '> | location      | varchar(200) | NO   |     | NULL    |       |
+    '> | startdate     | date         | NO   |     | NULL    |       |
+    '> | enddate       | date         | NO   |     | NULL    |       |
+    '> | description   | varchar(200) | NO   |     | NULL    |       |
+    '> | employeeid    | char(10)     | YES  | MUL | NULL    |       |
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> 7 rows in set (0.00 sec)
+    '>
+    '> mysql> desc salary;
+    '> +------------+----------+------+-----+---------+-------+
+    '> | Field      | Type     | Null | Key | Default | Extra |
+    '> +------------+----------+------+-----+---------+-------+
+    '> | salid      | char(5)  | NO   | PRI | NULL    |       |
+    '> | salary     | int      | NO   |     | NULL    |       |
+    '> | startdate  | date     | NO   |     | NULL    |       |
+    '> | enddate    | date     | NO   |     | NULL    |       |
+    '> | employeeid | char(10) | YES  | MUL | NULL    |       |
+    '> +------------+----------+------+-----+---------+-------+
+    '> 5 rows in set (0.00 sec)
+    '>
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','08061999','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '08061999' for column 'DOB' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','8 july 1999','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '8 july 1999' for column 'DOB' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '1 jan' for column 'joiningdate' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaymysql> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+mysql>' at line 1
+mysql> +--------------------+
+    -> | Database           |
+    -> +--------------------+
+    -> | company            |
+    -> | employee           |
+    -> | employeeinfo       |
+    -> | information_schema |
+    -> | mysql              |
+    -> | performance_schema |
+    -> | persons            |
+    -> | sakila             |
+    -> | sys                |
+    -> | world              |
+    -> | zy                 |
+    -> +--------------------+
+    -> 11 rows in set (0.01 sec)
+    ->
+    -> mysql> use employeeinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Database           |
++--------------------+
+| company  ' at line 1
+mysql> Database changed
+    -> mysql> showtables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> showtables' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'showtables' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> +------------------------+
+    -> | Tables_in_employeeinfo |
+    -> +------------------------+
+    -> | employeeinformation    |
+    -> +------------------------+
+    -> 1 row in set (0.01 sec)
+    ->
+    -> mysql> desc employeeinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------+
+| Tables_in_employeeinfo |
++------------------------+' at line 1
+mysql> +--------------+--------------+------+-----+---------+-------+
+    -> | Field        | Type         | Null | Key | Default | Extra |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> | Employeename | varchar(300) | NO   |     | NULL    |       |
+    -> | lastname     | char(200)    | YES  |     | NULL    |       |
+    -> | age          | int          | YES  |     | NULL    |       |
+    -> | Adress       | varchar(500) | NO   |     | NULL    |       |
+    -> | city         | varchar(200) | NO   |     | NULL    |       |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.01 sec)
+    ->
+    -> mysql> use employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------+--------------+------+-----+---------+-------+
+| Field        | ' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +--------------------+
+    -> | Tables_in_employee |
+    -> +--------------------+
+    -> | employeedata       |
+    -> +--------------------+
+    -> 1 row in set (0.00 sec)
+    ->
+    -> mysql> use company;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Tables_in_employee |
++--------------------+
+| employeed' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +-------------------------+
+    -> | Tables_in_company       |
+    -> +-------------------------+
+    -> | address                 |
+    -> | companyinfo             |
+    -> | departmentalinformation |
+    -> | educationalbackground   |
+    -> | employeeinfo            |
+    -> | professionalbackground  |
+    -> | salary                  |
+    -> +-------------------------+
+    -> 7 rows in set (0.00 sec)
+    ->
+    -> mysql> desc address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------------------+
+| Tables_in_company       |
++-----------------------' at line 1
+mysql> +-------------+--------------+------+-----+---------+-------+
+    -> | Field       | Type         | Null | Key | Default | Extra |
+    -> +-------------+--------------+------+-----+---------+-------+
+    -> | employeeid  | char(10)     | YES  | MUL | NULL    |       |
+    -> | houseno     | varchar(200) | NO   | PRI | NULL    |       |
+    -> | city        | varchar(200) | NO   |     | NULL    |       |
+    -> | state       | varchar(200) | NO   |     | NULL    |       |
+    -> | pincode     | varchar(10)  | NO   |     | NULL    |       |
+    -> | addresstype | varchar(200) | NO   |     | NULL    |       |
+    -> +-------------+--------------+------+-----+---------+-------+
+    -> 6 rows in set (0.00 sec)
+    ->
+    -> mysql> show values;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+--------------+------+-----+---------+-------+
+| Field       | Ty' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> SELECT * FROM[address];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address]' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> SELECT * FROM[address] WHERE[houseno]="value";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address] WHERE[houseno]="value"' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> desc companyinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> +---------------+--------------+------+-----+---------+-------+
+    -> | Field         | Type         | Null | Key | Default | Extra |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> | companyname   | varchar(200) | NO   |     | NULL    |       |
+    -> | headquarters  | varchar(200) | NO   |     | NULL    |       |
+    -> | phnno         | int          | NO   | PRI | NULL    |       |
+    -> | established   | varchar(200) | NO   |     | NULL    |       |
+    -> | noofemployees | int          | NO   |     | NULL    |       |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM companyinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+---------------+--------------+------+-----+---------+-------+
+| Field         ' at line 1
+mysql> +-------------+--------------+---------+-------------+---------------+
+    -> | companyname | headquarters | phnno   | established | noofemployees |
+    -> +-------------+--------------+---------+-------------+---------------+
+    -> | facebook    | new york     | 2345228 | 2008        |          2300 |
+    -> | google      | california   | 2345638 | 2008        |          1300 |
+    -> | amazon      | sanfrancisco | 2345678 | 1999        |         10000 |
+    -> | apple       | new jersey   | 2349928 | 2018        |          2200 |
+    -> +-------------+--------------+---------+-------------+---------------+
+    -> 4 rows in set (0.00 sec)
+    ->
+    -> mysql> INSERT INTO companyinfo(companyname, headquarters, phnno, established, noofemployees)
+    ->     -> VALUE ('paytm','delhi','84638922','2010','10000');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+--------------+---------+-------------+---------------+
+| company' at line 1
+mysql> Query OK, 1 row affected (0.01 sec)
+    ->
+    -> mysql> desc departmentalinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.01 sec)
+
+mysql> desc departmentalinformation' at line 1
+mysql> +--------------+--------------+------+-----+---------+-------+
+    -> | Field        | Type         | Null | Key | Default | Extra |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> | deptid       | char(10)     | NO   | PRI | NULL    |       |
+    -> | deptcode     | char(5)      | NO   |     | NULL    |       |
+    -> | name         | varchar(100) | NO   |     | NULL    |       |
+    -> | parentdeptid | char(5)      | NO   |     | NULL    |       |
+    -> | employeeid   | char(10)     | YES  | MUL | NULL    |       |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM departmentalinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------+--------------+------+-----+---------+-------+
+| Field        | ' at line 1
+mysql> Empty set (0.00 sec)
+    ->
+    -> mysql> desc educationalbackground;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Empty set (0.00 sec)
+
+mysql> desc educationalbackground' at line 1
+mysql> +-------------+---------------+------+-----+---------+-------+
+    -> | Field       | Type          | Null | Key | Default | Extra |
+    -> +-------------+---------------+------+-----+---------+-------+
+    -> | university  | varchar(200)  | NO   |     | NULL    |       |
+    -> | course      | varchar(200)  | NO   |     | NULL    |       |
+    -> | startdate   | date          | NO   |     | NULL    |       |
+    -> | enddate     | date          | NO   |     | NULL    |       |
+    -> | description | varchar(2000) | NO   |     | NULL    |       |
+    -> | eduid       | int           | NO   | PRI | NULL    |       |
+    -> | employeeid  | char(10)      | YES  | MUL | NULL    |       |
+    -> +-------------+---------------+------+-----+---------+-------+
+    -> 7 rows in set (0.00 sec)
+    ->
+    -> mysql> desc employeeinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+---------------+------+-----+---------+-------+
+| Field       | T' at line 1
+mysql> +------------------+--------------+------+-----+---------+-------+
+    -> | Field            | Type         | Null | Key | Default | Extra |
+    -> +------------------+--------------+------+-----+---------+-------+
+    -> | employeeid       | char(10)     | NO   | PRI | NULL    |       |
+    -> | name             | varchar(200) | NO   |     | NULL    |       |
+    -> | lastname         | varchar(100) | NO   |     | NULL    |       |
+    -> | phnno            | int          | NO   | UNI | NULL    |       |
+    -> | temporaryaddress | varchar(200) | NO   |     | NULL    |       |
+    -> | emailid          | varchar(200) | NO   | UNI | NULL    |       |
+    -> | DOB              | date         | NO   |     | NULL    |       |
+    -> | joiningdate      | date         | NO   |     | NULL    |       |
+    -> | leavingdate      | date         | NO   |     | NULL    |       |
+    -> | aadharno         | int          | NO   | UNI | NULL    |       |
+    -> | panno            | int          | NO   | UNI | NULL    |       |
+    -> +------------------+--------------+------+-----+---------+-------+
+    -> 11 rows in set (0.00 sec)
+    ->
+    -> mysql> desc proffessionalbackground;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------+--------------+------+-----+---------+-------+
+| Field      ' at line 1
+mysql> ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+    '> mysql> desc professionalbackground;
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> | Field         | Type         | Null | Key | Default | Extra |
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> | companyid     | int          | NO   | PRI | NULL    |       |
+    '> | roleincompany | varchar(200) | NO   |     | NULL    |       |
+    '> | location      | varchar(200) | NO   |     | NULL    |       |
+    '> | startdate     | date         | NO   |     | NULL    |       |
+    '> | enddate       | date         | NO   |     | NULL    |       |
+    '> | description   | varchar(200) | NO   |     | NULL    |       |
+    '> | employeeid    | char(10)     | YES  | MUL | NULL    |       |
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> 7 rows in set (0.00 sec)
+    '>
+    '> mysql> desc salary;
+    '> +------------+----------+------+-----+---------+-------+
+    '> | Field      | Type     | Null | Key | Default | Extra |
+    '> +------------+----------+------+-----+---------+-------+
+    '> | salid      | char(5)  | NO   | PRI | NULL    |       |
+    '> | salary     | int      | NO   |     | NULL    |       |
+    '> | startdate  | date     | NO   |     | NULL    |       |
+    '> | enddate    | date     | NO   |     | NULL    |       |
+    '> | employeeid | char(10) | YES  | MUL | NULL    |       |
+    '> +------------+----------+------+-----+---------+-------+
+    '> 5 rows in set (0.00 sec)
+    '>
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','08061999','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '08061999' for column 'DOB' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','8 july 1999','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '8 july 1999' for column 'DOB' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '1 jan' for column 'joiningdate' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaymysql> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+mysql>' at line 1
+mysql> +--------------------+
+    -> | Database           |
+    -> +--------------------+
+    -> | company            |
+    -> | employee           |
+    -> | employeeinfo       |
+    -> | information_schema |
+    -> | mysql              |
+    -> | performance_schema |
+    -> | persons            |
+    -> | sakila             |
+    -> | sys                |
+    -> | world              |
+    -> | zy                 |
+    -> +--------------------+
+    -> 11 rows in set (0.01 sec)
+    ->
+    -> mysql> use employeeinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Database           |
++--------------------+
+| company  ' at line 1
+mysql> Database changed
+    -> mysql> showtables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> showtables' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'showtables' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> +------------------------+
+    -> | Tables_in_employeeinfo |
+    -> +------------------------+
+    -> | employeeinformation    |
+    -> +------------------------+
+    -> 1 row in set (0.01 sec)
+    ->
+    -> mysql> desc employeeinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------+
+| Tables_in_employeeinfo |
++------------------------+' at line 1
+mysql> +--------------+--------------+------+-----+---------+-------+
+    -> | Field        | Type         | Null | Key | Default | Extra |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> | Employeename | varchar(300) | NO   |     | NULL    |       |
+    -> | lastname     | char(200)    | YES  |     | NULL    |       |
+    -> | age          | int          | YES  |     | NULL    |       |
+    -> | Adress       | varchar(500) | NO   |     | NULL    |       |
+    -> | city         | varchar(200) | NO   |     | NULL    |       |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.01 sec)
+    ->
+    -> mysql> use employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------+--------------+------+-----+---------+-------+
+| Field        | ' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +--------------------+
+    -> | Tables_in_employee |
+    -> +--------------------+
+    -> | employeedata       |
+    -> +--------------------+
+    -> 1 row in set (0.00 sec)
+    ->
+    -> mysql> use company;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Tables_in_employee |
++--------------------+
+| employeed' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +-------------------------+
+    -> | Tables_in_company       |
+    -> +-------------------------+
+    -> | address                 |
+    -> | companyinfo             |
+    -> | departmentalinformation |
+    -> | educationalbackground   |
+    -> | employeeinfo            |
+    -> | professionalbackground  |
+    -> | salary                  |
+    -> +-------------------------+
+    -> 7 rows in set (0.00 sec)
+    ->
+    -> mysql> desc address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------------------+
+| Tables_in_company       |
++-----------------------' at line 1
+mysql> +-------------+--------------+------+-----+---------+-------+
+    -> | Field       | Type         | Null | Key | Default | Extra |
+    -> +-------------+--------------+------+-----+---------+-------+
+    -> | employeeid  | char(10)     | YES  | MUL | NULL    |       |
+    -> | houseno     | varchar(200) | NO   | PRI | NULL    |       |
+    -> | city        | varchar(200) | NO   |     | NULL    |       |
+    -> | state       | varchar(200) | NO   |     | NULL    |       |
+    -> | pincode     | varchar(10)  | NO   |     | NULL    |       |
+    -> | addresstype | varchar(200) | NO   |     | NULL    |       |
+    -> +-------------+--------------+------+-----+---------+-------+
+    -> 6 rows in set (0.00 sec)
+    ->
+    -> mysql> show values;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+--------------+------+-----+---------+-------+
+| Field       | Ty' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> SELECT * FROM[address];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address]' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> SELECT * FROM[address] WHERE[houseno]="value";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[address] WHERE[houseno]="value"' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1064 (42000): You have an error in your SQL syntax' at line 1
+    -> mysql> desc companyinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the manual that corresponds to your MySQL server version for the right syntax to' at line 1
+mysql> +---------------+--------------+------+-----+---------+-------+
+    -> | Field         | Type         | Null | Key | Default | Extra |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> | companyname   | varchar(200) | NO   |     | NULL    |       |
+    -> | headquarters  | varchar(200) | NO   |     | NULL    |       |
+    -> | phnno         | int          | NO   | PRI | NULL    |       |
+    -> | established   | varchar(200) | NO   |     | NULL    |       |
+    -> | noofemployees | int          | NO   |     | NULL    |       |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM companyinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+---------------+--------------+------+-----+---------+-------+
+| Field         ' at line 1
+mysql> +-------------+--------------+---------+-------------+---------------+
+    -> | companyname | headquarters | phnno   | established | noofemployees |
+    -> +-------------+--------------+---------+-------------+---------------+
+    -> | facebook    | new york     | 2345228 | 2008        |          2300 |
+    -> | google      | california   | 2345638 | 2008        |          1300 |
+    -> | amazon      | sanfrancisco | 2345678 | 1999        |         10000 |
+    -> | apple       | new jersey   | 2349928 | 2018        |          2200 |
+    -> +-------------+--------------+---------+-------------+---------------+
+    -> 4 rows in set (0.00 sec)
+    ->
+    -> mysql> INSERT INTO companyinfo(companyname, headquarters, phnno, established, noofemployees)
+    ->     -> VALUE ('paytm','delhi','84638922','2010','10000');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+--------------+---------+-------------+---------------+
+| company' at line 1
+mysql> Query OK, 1 row affected (0.01 sec)
+    ->
+    -> mysql> desc departmentalinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 1 row affected (0.01 sec)
+
+mysql> desc departmentalinformation' at line 1
+mysql> +--------------+--------------+------+-----+---------+-------+
+    -> | Field        | Type         | Null | Key | Default | Extra |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> | deptid       | char(10)     | NO   | PRI | NULL    |       |
+    -> | deptcode     | char(5)      | NO   |     | NULL    |       |
+    -> | name         | varchar(100) | NO   |     | NULL    |       |
+    -> | parentdeptid | char(5)      | NO   |     | NULL    |       |
+    -> | employeeid   | char(10)     | YES  | MUL | NULL    |       |
+    -> +--------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM departmentalinformation;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------+--------------+------+-----+---------+-------+
+| Field        | ' at line 1
+mysql> Empty set (0.00 sec)
+    ->
+    -> mysql> desc educationalbackground;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Empty set (0.00 sec)
+
+mysql> desc educationalbackground' at line 1
+mysql> +-------------+---------------+------+-----+---------+-------+
+    -> | Field       | Type          | Null | Key | Default | Extra |
+    -> +-------------+---------------+------+-----+---------+-------+
+    -> | university  | varchar(200)  | NO   |     | NULL    |       |
+    -> | course      | varchar(200)  | NO   |     | NULL    |       |
+    -> | startdate   | date          | NO   |     | NULL    |       |
+    -> | enddate     | date          | NO   |     | NULL    |       |
+    -> | description | varchar(2000) | NO   |     | NULL    |       |
+    -> | eduid       | int           | NO   | PRI | NULL    |       |
+    -> | employeeid  | char(10)      | YES  | MUL | NULL    |       |
+    -> +-------------+---------------+------+-----+---------+-------+
+    -> 7 rows in set (0.00 sec)
+    ->
+    -> mysql> desc employeeinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+---------------+------+-----+---------+-------+
+| Field       | T' at line 1
+mysql> +------------------+--------------+------+-----+---------+-------+
+    -> | Field            | Type         | Null | Key | Default | Extra |
+    -> +------------------+--------------+------+-----+---------+-------+
+    -> | employeeid       | char(10)     | NO   | PRI | NULL    |       |
+    -> | name             | varchar(200) | NO   |     | NULL    |       |
+    -> | lastname         | varchar(100) | NO   |     | NULL    |       |
+    -> | phnno            | int          | NO   | UNI | NULL    |       |
+    -> | temporaryaddress | varchar(200) | NO   |     | NULL    |       |
+    -> | emailid          | varchar(200) | NO   | UNI | NULL    |       |
+    -> | DOB              | date         | NO   |     | NULL    |       |
+    -> | joiningdate      | date         | NO   |     | NULL    |       |
+    -> | leavingdate      | date         | NO   |     | NULL    |       |
+    -> | aadharno         | int          | NO   | UNI | NULL    |       |
+    -> | panno            | int          | NO   | UNI | NULL    |       |
+    -> +------------------+--------------+------+-----+---------+-------+
+    -> 11 rows in set (0.00 sec)
+    ->
+    -> mysql> desc proffessionalbackground;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------+--------------+------+-----+---------+-------+
+| Field      ' at line 1
+mysql> ERROR 1146 (42S02): Table 'company.proffessionalbackground' doesn't exist
+    '> mysql> desc professionalbackground;
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> | Field         | Type         | Null | Key | Default | Extra |
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> | companyid     | int          | NO   | PRI | NULL    |       |
+    '> | roleincompany | varchar(200) | NO   |     | NULL    |       |
+    '> | location      | varchar(200) | NO   |     | NULL    |       |
+    '> | startdate     | date         | NO   |     | NULL    |       |
+    '> | enddate       | date         | NO   |     | NULL    |       |
+    '> | description   | varchar(200) | NO   |     | NULL    |       |
+    '> | employeeid    | char(10)     | YES  | MUL | NULL    |       |
+    '> +---------------+--------------+------+-----+---------+-------+
+    '> 7 rows in set (0.00 sec)
+    '>
+    '> mysql> desc salary;
+    '> +------------+----------+------+-----+---------+-------+
+    '> | Field      | Type     | Null | Key | Default | Extra |
+    '> +------------+----------+------+-----+---------+-------+
+    '> | salid      | char(5)  | NO   | PRI | NULL    |       |
+    '> | salary     | int      | NO   |     | NULL    |       |
+    '> | startdate  | date     | NO   |     | NULL    |       |
+    '> | enddate    | date     | NO   |     | NULL    |       |
+    '> | employeeid | char(10) | YES  | MUL | NULL    |       |
+    '> +------------+----------+------+-----+---------+-------+
+    '> 5 rows in set (0.00 sec)
+    '>
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','08061999','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '08061999' for column 'DOB' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','8 july 1999','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '8 july 1999' for column 'DOB' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinaydhull01@gmail.com','1999-08-08','1 jan','null','122345','32145');
+    '> ERROR 1292 (22007): Incorrect date value: '1 jan' for column 'joiningdate' at row 1
+    '> mysql> INSERT INTO employeeinfo(employeeid, name, lastname, phnno, temporaryaddress, emailid, DOB, joiningdate, leavingdate, aadharno, panno)
+    '>     -> VALUE ('1','rohit','dhull','905087549','safidon','vinay
